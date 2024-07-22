@@ -1,0 +1,30 @@
+1. udevadm info 명령어로 ACM USB 장치의 DEVPATH 확인
+명령어: udevadm info --name=/dev/ttyACM0 --attribute-walk
+
+예시 DEVPATH:
+1.2.2
+1.2.3
+1.2.4
+
+
+2. udev 규칙 파일 생성 및 편집
+명령어: sudo nano /etc/udev/rules.d/99-usb-serial.rules
+
+
+3. 고유 경로 기반 규칙 추가
+
+예시:
+SUBSYSTEM=="tty", KERNEL=="ttyACM*", ATTRS{devpath}=="1.2.2", SYMLINK+="usb_hub_port1"
+SUBSYSTEM=="tty", KERNEL=="ttyACM*", ATTRS{devpath}==“1.2.3”, SYMLINK+="usb_hub_port2"
+SUBSYSTEM=="tty", KERNEL=="ttyACM*", ATTRS{devpath}==“1.2.4”, SYMLINK+="usb_hub_port3"
+SUBSYSTEM=="tty", KERNEL=="ttyACM*", ATTRS{devpath}=="1.5.5", SYMLINK+="usb_hub_port4"
+SUBSYSTEM=="tty", KERNEL=="ttyACM*", ATTRS{devpath}=="1.6.6", SYMLINK+="usb_hub_port5"
+SUBSYSTEM=="tty", KERNEL=="ttyACM*", ATTRS{devpath}=="1.7.7", SYMLINK+="usb_hub_port6"
+SUBSYSTEM=="tty", KERNEL=="ttyACM*", ATTRS{devpath}=="1.8.8", SYMLINK+="usb_hub_port7"
+SUBSYSTEM=="tty", KERNEL=="ttyACM*", ATTRS{devpath}=="1.9.9", SYMLINK+="usb_hub_port8"
+SUBSYSTEM=="tty", KERNEL=="ttyACM*", ATTRS{devpath}=="1.10.10", SYMLINK+="usb_hub_port9"
+SUBSYSTEM=="tty", KERNEL=="ttyACM*", ATTRS{devpath}=="1.11.11", SYMLINK+="usb_hub_port10"
+
+
+4. 심볼릭 링크 생성 확인
+ls -l /dev/usb_hub_port*
